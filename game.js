@@ -64,18 +64,22 @@ function checkAnswer(){
 function generateGame() {
     var randomChosenColour = buttonColors[nextSequence()];
         gamePattern.push(randomChosenColour);
-        animateFlash(randomChosenColour);
-        playSound(randomChosenColour);
-        // for(i=0; i<gamePattern.length; i++) {
-        //     (function(x) {
-        //       setTimeout(() => {
-        //         animateFlash(gamePattern[i]);
-        //         playSound(gamePattern[i]);
-        //       }, 100)
-        //     })(data[i]);
-       // }
-};
 
+        if (gamePattern.length > -1){
+            for (var i = 0; i < gamePattern.length; i++) {
+                (function (i) {
+                    setTimeout(function () {
+                        playSound(gamePattern[i]);
+                        animatePress(gamePattern[i]);
+                    }, 400 * (i+3));
+                })(i);    
+            }
+        } else {
+            return
+        }
+        
+};
+ 
 $(document).keypress(function(){
     generateGame();
 
@@ -84,7 +88,9 @@ $(document).keypress(function(){
         userClickedPattern.push(userChosenColour);
         animatePress(userChosenColour);
         playSound(userChosenColour);
-        checkAnswer();
+        setTimeout(function () {
+            checkAnswer();
+        }, 200);
     });
         
 });
