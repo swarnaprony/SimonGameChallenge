@@ -40,8 +40,6 @@ function playSound(colour) {
 
 function checkAnswer(){
     var number = 5;
-    console.log(gamePattern);
-    console.log(userClickedPattern);
     for (var i = 0; i < userClickedPattern.length; i++) {
         if (gamePattern[i] == userClickedPattern[i]) {
             number = 1;
@@ -65,32 +63,27 @@ function generateGame() {
     var randomChosenColour = buttonColors[nextSequence()];
         gamePattern.push(randomChosenColour);
 
-        if (gamePattern.length > -1){
-            for (var i = 0; i < gamePattern.length; i++) {
-                (function (i) {
-                    setTimeout(function () {
-                        playSound(gamePattern[i]);
-                        animatePress(gamePattern[i]);
-                    }, 400 * (i+3));
-                })(i);    
-            }
-        } else {
-            return
+        for (var i = 0; i < gamePattern.length; i++) {
+            (function (i) {
+                setTimeout(function () {
+                    playSound(gamePattern[i]);
+                    animatePress(gamePattern[i]);
+                }, 400 * (i+3));
+            })(i);    
         }
-        
 };
  
 $(document).keypress(function(){
     generateGame();
-
-    $(".btn").click(function() {
-        userChosenColour = $(this).attr("id");
-        userClickedPattern.push(userChosenColour);
-        animatePress(userChosenColour);
-        playSound(userChosenColour);
-        setTimeout(function () {
-            checkAnswer();
-        }, 200);
-    });
         
+});
+
+$(".btn").click(function() {
+    userChosenColour = $(this).attr("id");
+    userClickedPattern.push(userChosenColour);
+    animatePress(userChosenColour);
+    playSound(userChosenColour);
+    setTimeout(function () {
+        checkAnswer();
+    }, 200);
 });
