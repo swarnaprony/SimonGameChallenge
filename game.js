@@ -43,10 +43,19 @@ function checkAnswer(){
     for (var i = 0; i < userClickedPattern.length; i++) {
         if (gamePattern[i] == userClickedPattern[i]) {
             number = 1;
+
         } else {
             gamePattern = [];
             userClickedPattern = [];
-            $("h1").text("Press any key to start again");
+
+            playSound("wrong")
+            $("body").addClass("game-over");
+    
+            setTimeout(function() { 
+                $("body").removeClass("game-over");
+            }, 200);
+
+            $("h1").text("Game Over, Press any key to Restart");
             level = 0;
             return
         };
